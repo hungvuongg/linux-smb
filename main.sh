@@ -9,12 +9,13 @@ _working_dir="/root/linux-smb"
 
 #source common functions
 source "$_working_dir/common.sh"
+source "$_working_dir/vars.sh"
 
 #source functions
-source "$_working_dir/add-user.sh"
-source "$_working_dir/delete-user.sh"
-source "$_working_dir/disable-user.sh"
-source "$_working_dir/disable-user.sh"
+source "$_working_dir/clt-stt.sh"
+source "$_working_dir/pers-admin.sh"
+source "$_working_dir/svr-stt.sh"
+source "$_working_dir/user-admin.sh"
 
 #global parameter 
 _ver="1.0"
@@ -24,7 +25,37 @@ _id=$(whoami)
 ##########################FUNCTION LISTS##########################
 #user administration
 function UserAdministration(){
-    clear
+    while true
+    do
+        MenuHeader
+        echo "1. Create new user"
+        echo "2. Reset user's password"
+        echo "3. Disable user"
+        echo "4. Remove user"
+        echo ""
+        echo "9. Back"
+        echo "0. Exit"
+        echo "--------------------------------------------"
+        printf "Choose your option: "
+        read _opt
+        if ! [[ "$_opt" =~ ^[0-9]+$ ]]; then
+            WrongInput
+        elif [[ "$_opt" -eq "1" ]]; then
+            CreateNewUser
+        elif [[ "$_opt" -eq "2" ]]; then
+            PermissionAdministration
+        elif [[ "$_opt" -eq "3" ]]; then
+            ServerStatuses
+        elif [[ "$_opt" -eq "4" ]]; then
+            ClientStatuses
+        elif [[ "$_opt" -eq "9" ]]; then
+            return
+        elif [[ "$_opt" -eq "0" ]]; then
+            exit 0
+        else
+            WrongInput
+        fi
+    done
 }
 
 #permission administration
@@ -53,7 +84,7 @@ function Menu(){
         echo "4. Client Statuses"
         echo ""
         echo "0. Exit"
-        echo "------------------------------------------------"
+        echo "--------------------------------------------"
         printf "Choose your option: "
         read _opt
         if ! [[ "$_opt" =~ ^[0-9]+$ ]]; then
