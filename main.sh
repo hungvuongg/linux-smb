@@ -107,12 +107,34 @@ function PermissionAdministration(){
 
 #server statuses
 function ServerStatuses(){
-    clear
-}
-
-#client statuses
-function ClientStatuses(){
-    clear
+    while true
+    do
+        MenuHeader
+        echo "1. View logged-in users"
+        echo "2. View all locked files"
+        echo "3. View specific user details"
+        echo ""
+        echo "9. Back"
+        echo "0. Exit"
+        echo "--------------------------------------------"
+        printf "Choose your option: "
+        read _opt
+        if ! [[ "$_opt" =~ ^[0-9]+$ ]]; then
+            WrongInput
+        elif [[ "$_opt" -eq "1" ]]; then
+            ViewLoggedInUser
+        elif [[ "$_opt" -eq "2" ]]; then
+            ViewLockedFiles
+        elif [[ "$_opt" -eq "3" ]]; then
+            ViewUserDetails
+        elif [[ "$_opt" -eq "9" ]]; then
+            return
+        elif [[ "$_opt" -eq "0" ]]; then
+            exit 0
+        else
+            WrongInput
+        fi
+    done
 }
 
 #menu
@@ -124,7 +146,6 @@ function Menu(){
         echo "2. Group Administration"
         echo "3. Permission Administration"
         echo "4. Server Statuses"
-        echo "5. Client Statuses"
         echo ""
         echo "0. Exit"
         echo "--------------------------------------------"
@@ -140,8 +161,6 @@ function Menu(){
             PermissionAdministration
         elif [[ "$_opt" -eq "4" ]]; then
             ServerStatuses
-        elif [[ "$_opt" -eq "5" ]]; then
-            ClientStatuses
         elif [[ "$_opt" -eq "0" ]]; then
             exit 0
         else
