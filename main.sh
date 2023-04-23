@@ -16,6 +16,7 @@ source "$_working_dir/clt-stt.sh"
 source "$_working_dir/pers-admin.sh"
 source "$_working_dir/svr-stt.sh"
 source "$_working_dir/user-admin.sh"
+source "$_working_dir/group-admin.sh"
 
 #global parameter 
 _ver="1.0"
@@ -51,6 +52,44 @@ function UserAdministration(){
             RemoveUser
         elif [[ "$_opt" -eq "5" ]]; then
             ListAllUsers
+        elif [[ "$_opt" -eq "9" ]]; then
+            return
+        elif [[ "$_opt" -eq "0" ]]; then
+            exit 0
+        else
+            WrongInput
+        fi
+    done
+}
+
+#user administration
+function GroupAdministration(){
+    while true
+    do
+        MenuHeader
+        echo "1. Create new group"
+        echo "2. Add user to group"
+        echo "3. Remove user from group"
+        echo "4. List group members"
+        echo "5. List all groups"
+        echo ""
+        echo "9. Back"
+        echo "0. Exit"
+        echo "--------------------------------------------"
+        printf "Choose your option: "
+        read _opt
+        if ! [[ "$_opt" =~ ^[0-9]+$ ]]; then
+            WrongInput
+        elif [[ "$_opt" -eq "1" ]]; then
+            CreateNewGroup
+        elif [[ "$_opt" -eq "2" ]]; then
+            AddUserToGroup
+        elif [[ "$_opt" -eq "3" ]]; then
+            RemoveUserFromGroup
+        elif [[ "$_opt" -eq "4" ]]; then
+            ListGroupMembers
+        elif [[ "$_opt" -eq "5" ]]; then
+            ListAllGroup
         elif [[ "$_opt" -eq "9" ]]; then
             return
         elif [[ "$_opt" -eq "0" ]]; then
