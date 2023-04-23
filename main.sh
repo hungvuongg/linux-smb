@@ -32,6 +32,7 @@ function UserAdministration(){
         echo "2. Reset user's password"
         echo "3. Disable user"
         echo "4. Remove user"
+        echo "5. List all User"
         echo ""
         echo "9. Back"
         echo "0. Exit"
@@ -43,11 +44,13 @@ function UserAdministration(){
         elif [[ "$_opt" -eq "1" ]]; then
             CreateNewUser
         elif [[ "$_opt" -eq "2" ]]; then
-            PermissionAdministration
+            ResetUserPassword
         elif [[ "$_opt" -eq "3" ]]; then
-            ServerStatuses
+            DisableUser
         elif [[ "$_opt" -eq "4" ]]; then
-            ClientStatuses
+            RemoveUser
+        elif [[ "$_opt" -eq "5" ]]; then
+            ListAllUsers
         elif [[ "$_opt" -eq "9" ]]; then
             return
         elif [[ "$_opt" -eq "0" ]]; then
@@ -79,9 +82,10 @@ function Menu(){
     do
         MenuHeader
         echo "1. User Administration"
-        echo "2. Permission Administration"
-        echo "3. Server Statuses"
-        echo "4. Client Statuses"
+        echo "2. Group Administration"
+        echo "3. Permission Administration"
+        echo "4. Server Statuses"
+        echo "5. Client Statuses"
         echo ""
         echo "0. Exit"
         echo "--------------------------------------------"
@@ -92,10 +96,12 @@ function Menu(){
         elif [[ "$_opt" -eq "1" ]]; then
             UserAdministration
         elif [[ "$_opt" -eq "2" ]]; then
-            PermissionAdministration
+            GroupAdministration
         elif [[ "$_opt" -eq "3" ]]; then
-            ServerStatuses
+            PermissionAdministration
         elif [[ "$_opt" -eq "4" ]]; then
+            ServerStatuses
+        elif [[ "$_opt" -eq "5" ]]; then
             ClientStatuses
         elif [[ "$_opt" -eq "0" ]]; then
             exit 0
