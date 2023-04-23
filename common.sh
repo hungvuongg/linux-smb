@@ -35,29 +35,16 @@ function CheckUserExist(){
     _smbexist=$(pdbedit $_user 2> /dev/null| grep -c "^$_user")
 }
 
+#create default share group
+function CheckGroupExist(){
+    #1=exist, 0=doesn't exist
+    _groupexist=$(grep -w -c "^$_group" /etc/group)
+}
+
 #create share dir 
 function CreateMountsDir(){
     if ! [[ -d $_smb_mount_dir ]]; then
         mkdir -p $_smb_mount_dir
-    fi
-}
-
-#create default share group
-function CheckGroupExist(){
-    _groupexist=$(grep -w -c "^$_groupname" /etc/group)
-    if [ $_groupexist -eq 1 ]; then
-        echo "Group '$_groupname' exists! Please try another name..."
-    else
-        if ! [[ "$_groupname" =~ ^[0-9a-zA-Z]+$ ]]; then
-                    echo "Wrong input. Please type again."
-                    echo "Press Enter to continue..."
-                    read enterKey
-        else
-            groupadd $_groupname    
-            echo "Group '$_groupname' have been created"
-                echo "Press Enter to continue..."
-                    read enterKey   
-        fi
     fi
 }
 

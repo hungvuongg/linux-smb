@@ -5,7 +5,6 @@ function CreateNewUser(){
     read _user
     if [[ -z $_user ]]; then
         echo "The username is empty. Try again..."
-        PressEnterKey
     elif ! [[ UserValidation ]]; then
         WrongInput
     else
@@ -19,15 +18,14 @@ function CreateNewUser(){
         if [[ $_smbexist -eq 1 ]];then
             echo "User '$_user' exist. Please try to reset password for this user"
             echo "Or you can try again with difference username"
-            PressEnterKey
         else 
             (echo $_smbpass ; echo $_smbpass)|smbpasswd -a $_user > /dev/null 2>&1  
             echo "User '$_user' has been created"
             #create .bat file
             CreatBatFile
-            PressEnterKey
         fi
     fi
+    PressEnterKey
 }
 
 #remove user
@@ -37,12 +35,11 @@ function RemoveUser(){
     CheckUserExist
     if [[ $_smbexist -eq 0 ]];then
         echo "User '$_user' doesn't exist. Please try again."
-        PressEnterKey
     else
         smbpasswd -x $_user > /dev/null 2>&1
         echo "User '$_user' has been removed. The Linux backend user still remaining exists"
-        PressEnterKey
     fi
+    PressEnterKey
 }
 
 #disable user
@@ -52,12 +49,11 @@ function DisableUser(){
     CheckUserExist
     if [[ $_smbexist -eq 0 ]];then
         echo "User '$_user' doesn't exist. Please try again."
-        PressEnterKey
     else
         smbpasswd -d $_user > /dev/null 2>&1 
         echo "User '$_user' has been disabled. The Linux backend user still remaining enabled"
-        PressEnterKey
     fi
+    PressEnterKey
 }
 
 #reset user pass
@@ -67,14 +63,13 @@ function ResetUserPassword(){
     CheckUserExist
     if [[ $_smbexist -eq 0 ]];then
         echo "User '$_user' doesn't exist. Please try again."
-        PressEnterKey
     else
         (echo $_smbpass ; echo $_smbpass)|smbpasswd $_user 
         echo "The password for user '$_user' has been reset."
         #re-create the new bat file with the new password
         CreatBatFile
-        PressEnterKey
     fi
+    PressEnterKey
 }
 
 #list all users
